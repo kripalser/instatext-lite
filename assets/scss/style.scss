@@ -20,12 +20,12 @@ body {
 }
 
 .text-container.editable .text-content {
-  outline: 1px dashed rgba(0, 0, 0, 0.15);
+  outline: 1px dashed rgba(0,0,0,.15);
 }
 
 .text-img {
   max-width: 100%;
-  outline: 1px solid rgba(0, 0, 0, 0.15);
+  outline: 1px solid rgba(0,0,0,.15);
 }
 
 canvas {
@@ -37,5 +37,3 @@ canvas {
   font-size: 42px;
   line-height: 54px;
 }
-
-/*# sourceMappingURL=style.css.map */

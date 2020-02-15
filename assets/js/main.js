@@ -113,6 +113,14 @@ $(function () {
             });
         });
 
+        var $body = $('body'),
+            bodyWidth = $body.width(),
+            $textContainer = $('#textContainer'),
+            textContainerWidth = $textContainer.outerWidth(),
+            scale = bodyWidth < textContainerWidth ? bodyWidth / textContainerWidth : 1;
+
+        $textContainer.css('transform', 'scale(' + scale + ')');
+
         // itl.slide.generate();
 
     };
