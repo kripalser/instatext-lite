@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Instatext Lite</title>
+
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/favicon/apple-touch-icon.png">
+  <link rel="shortcut icon" href="assets/img/favicon/favicon.ico">
+
+  <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+<body>
+
+<div class="container form-container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <form>
+        <div class="form-group">
+          <div class="d-flex">
+            <label for="mainText">Текст</label>
+            <!--<div class="line-count ml-auto text-muted">
+              <span class="line-count-current">0</span> из <span class="line-count-limit">22</span> строк
+            </div>-->
+          </div>
+          <textarea class="form-control" id="mainText" name="mainText" type="text" rows="12" required></textarea>
+        </div>
+        <button class="btn btn-primary mt-3" type="submit">Сгенерировать картинку</button>
+      </form>
+    </div>
+  </div>
+  <button class="btn btn-outline-secondary btn-block btn-edit mb-3 d-none" type="button">Редактировать данные</button>
+  <button class="btn btn-primary btn-block btn-download mb-5 d-none" type="button">Скачать картинку</button>
+</div>
+
+<div class="text-container d-none" id="textContainer">
+  <div class="text-content"></div>
+</div>
+
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/html2canvas.min.js"></script>
+<script src="assets/js/FileSaver.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>

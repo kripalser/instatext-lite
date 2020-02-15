@@ -1,0 +1,11 @@
+{
+  "name": "bookcover",
+  "version": "0.0.1",
+  "main": "scripts.js",
+  "scripts": {
+    "start": "browser-sync start --server --files \"*.html, assets/css/*.css, assets/js/*.js\""
+  },
+  "devDependencies": {
+    "browser-sync": "^2.18.6"
+  }
+}
