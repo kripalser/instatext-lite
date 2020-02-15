@@ -18,15 +18,10 @@
 <div class="container form-container">
   <div class="row">
     <div class="col-md-6 offset-md-3">
-      <form>
+      <form class="d-flex flex-column">
         <div class="form-group">
-          <div class="d-flex">
-            <label for="mainText">Текст</label>
-            <!--<div class="line-count ml-auto text-muted">
-              <span class="line-count-current">0</span> из <span class="line-count-limit">22</span> строк
-            </div>-->
-          </div>
-          <textarea class="form-control" id="mainText" name="mainText" type="text" rows="12" required></textarea>
+          <label for="mainText">Текст</label>
+          <textarea class="form-control" id="mainText" name="mainText" type="text" required></textarea>
         </div>
         <button class="btn btn-primary mt-3" type="submit">Сгенерировать картинку</button>
       </form>
