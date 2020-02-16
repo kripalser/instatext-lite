@@ -27,7 +27,7 @@ textarea.form-control {
   left: -9999px;
   width: 1080px;
   height: 1350px;
-  padding: 54px;
+  padding: 81px 64px; /* 54 + 54 / 2 = 81 */
   overflow: hidden;
   font-size: 42px;
   line-height: 54px;
