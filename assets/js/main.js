@@ -2,42 +2,66 @@ $(function () {
 
     var itl = {};
 
-    itl.document = {
+    itl.form = {
 
-        _target: '.container',
-        _sourceClass: 'text-container',
-        _sourceId: 'textContainer'
+        _id: '#form',
+        _input: '#textInput'
 
     };
 
     itl.slide = {
 
+        _id: 'slide',
         _class: 'slide',
-        _data: {},
+        _qty: 0,
 
-        generate: function () {
+        generate: function (sourceText) {
 
-            var $container = $('#' + itl.document._sourceId),
-                $textContent = $container.find('.text-content'),
-                content = itl.slide._data.mainText.replace(/\n/g, '<br>'),
-                lineLimit = 22,
-                lineCount = 0,
-                lineHeight = Math.floor($textContent.css('line-height').replace(/[^-\d.]/g, '')),
-                $submitBtn = $('.btn[type="submit"]');
+            var $firstSlide = $('<div class="slide"></div>');
 
-            $textContent.html(content);
+            $firstSlide.html(itl.slide.addBreaks(sourceText));
+            itl.slide.split($firstSlide, sourceText);
 
-            $container.removeClass('d-none');
-            lineCount = $textContent.height() / lineHeight;
-            $container.addClass('d-none');
+        },
 
-            if (lineCount > lineLimit) {
-                $('.btn-edit').trigger('click');
-                alert('Слишком много текста 😢');
-            } else {
-                itl.image.generate();
+        split: function ($firstSlide, sourceText) {
+            var currentString = sourceText,
+                lastWordIndex,
+                lastNewLineIndex,
+                removeIndex,
+                stringLeftover;
+
+            itl.slide._qty += 1;
+
+            $('body').append($firstSlide.attr('id', itl.slide._id + '-' + itl.slide._qty));
+
+            while (currentString.length && itl.slide.checkOverflow($firstSlide)) {
+                lastWordIndex = currentString.lastIndexOf(' ');
+                lastNewLineIndex = currentString.lastIndexOf('\n');
+                removeIndex = Math.max(lastWordIndex, lastNewLineIndex);
+                // Split by space or new line, depending on what goes first from end
+                currentString = currentString.substring(0, removeIndex);
+                $firstSlide.html(itl.slide.addBreaks(currentString));
             }
 
+            stringLeftover = sourceText.substring(currentString.length);
+
+            if (stringLeftover.length) {
+                var $nextClone = $firstSlide.clone().attr('id', itl.slide._id + '-' + itl.slide._qty);
+                $firstSlide.after($nextClone);
+                $nextClone.html(itl.slide.addBreaks(stringLeftover));
+                itl.slide.split($nextClone, stringLeftover);
+            } else {
+                itl.image.generate($('.slide'));
+            }
+        },
+
+        checkOverflow: function ($slide) {
+            return $slide[0].scrollHeight > $slide.innerHeight();
+        },
+
+        addBreaks: function (sourceText) {
+            return sourceText.trim().replace(/\n/g, '<br>');
         }
 
     };
@@ -45,21 +69,21 @@ $(function () {
     itl.image = {
 
         _canvas: undefined,
+        _count: 0,
 
-        generate: function () {
+        generate: function ($slides) {
 
-            var element = itl.document._sourceId;
-            var elementId = '#' + element;
-            var $element = $(elementId)[0];
+            if (itl.image._count >= $slides.length) {
+                return;
+            }
 
-            html2canvas($element, {
+            html2canvas($slides[itl.image._count], {
 
                 width: 1080,
                 height: 1350,
                 onclone: function (clonedDocument) {
-                    $(clonedDocument).find(elementId).removeClass('d-none');
                     // Removes extra elements and styles to prevent the canvas offset
-                    $(clonedDocument).find('.form-container').remove();
+                    $(clonedDocument).find(itl.form._id).remove();
                     $(clonedDocument).find('body').css({'padding': 0});
                 }
 
@@ -67,13 +91,19 @@ $(function () {
 
                 itl.image._canvas = canvas;
 
-                var img = new Image();
+                var img = new Image(),
+                    imgContainer = $('<div></div>');
 
                 img.src = canvas.toDataURL();
-                img.className = 'text-img';
 
-                $('.container').append($(img));
-                $('.btn-download').removeClass('d-none');
+                imgContainer.addClass('text-img');
+                imgContainer.attr('data-order', itl.image._count + 1);
+                imgContainer.append(img);
+
+                $('body').append(imgContainer);
+
+                itl.image._count++;
+                itl.image.generate($slides);
 
             });
 
@@ -83,37 +113,15 @@ $(function () {
 
     itl.init = function () {
 
-        var $form = $('form');
-
-        $form.on('submit', function (e) {
+        $(itl.form._id).on('submit', function (e) {
             e.preventDefault();
+
+            var $form = $(this);
+
             $form.addClass('d-none');
-            $('.btn-edit').removeClass('d-none');
-
-            var formData = $form.serializeArray();
-
-            $(formData).each(function (index, obj) {
-                itl.slide._data[obj.name] = obj.value;
-            });
-
-            itl.slide.generate();
+            itl.slide.generate($form.find(itl.form._input).val());
 
         });
-
-        $('.btn-edit').on('click', function (e) {
-            $('.text-img').remove();
-            $('form').removeClass('d-none');
-            $(e.target).addClass('d-none');
-            $('.btn-download').addClass('d-none');
-        });
-
-        $('.btn-download').on('click', function (e) {
-            itl.image._canvas.toBlob(function (blob) {
-                saveAs(blob, new Date().valueOf() + '.png');
-            });
-        });
-
-        // itl.slide.generate();
 
     };
 

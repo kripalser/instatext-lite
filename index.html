@@ -15,25 +15,12 @@
 </head>
 <body>
 
-<div class="container form-container">
-  <div class="row">
-    <div class="col-md-6 offset-md-3">
-      <form>
-        <div class="form-group">
-          <label for="mainText">Текст</label>
-          <textarea class="form-control" id="mainText" name="mainText" type="text" rows="12" required></textarea>
-        </div>
-        <button class="btn btn-primary btn-block" type="submit">Сгенерировать картинку</button>
-      </form>
-    </div>
+<form id="form">
+  <div class="form-group">
+      <textarea class="form-control" id="textInput" placeholder="Давайте свой текст" aria-label="Текст" required></textarea>
   </div>
-  <button class="btn btn-outline-secondary btn-block btn-edit mb-3 d-none" type="button">Редактировать текст</button>
-  <button class="btn btn-primary btn-block btn-download mb-5 d-none" type="button">Скачать картинку</button>
-</div>
-
-<div class="text-container d-none" id="textContainer">
-  <div class="text-content"></div>
-</div>
+  <button class="btn btn-primary btn-block" type="submit">Извольте генерировать</button>
+</form>
 
 <script src="assets/js/jquery.min.js"></script>
 <script src="assets/js/html2canvas.min.js"></script>
