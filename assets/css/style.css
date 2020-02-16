@@ -37,7 +37,7 @@ textarea.form-control {
 
 .text-img {
   position: relative;
-  display: block;
+  display: inline-block;
   max-width: 100%;
   outline: 1px solid rgba(0, 0, 0, .15);
 }

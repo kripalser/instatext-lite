@@ -81,6 +81,7 @@ $(function () {
 
                 width: 1080,
                 height: 1350,
+                scale: 1,
                 onclone: function (clonedDocument) {
                     // Removes extra elements and styles to prevent the canvas offset
                     $(clonedDocument).find(itl.form._id).remove();
