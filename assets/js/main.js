@@ -92,15 +92,19 @@ $(function () {
                 itl.image._canvas = canvas;
 
                 var img = new Image(),
-                    imgContainer = $('<div></div>');
+                    imgLink = $('<a></a>');
 
                 img.src = canvas.toDataURL();
 
-                imgContainer.addClass('text-img');
-                imgContainer.attr('data-order', itl.image._count + 1);
-                imgContainer.append(img);
+                imgLink.addClass('text-img')
+                        .attr({
+                            'data-order': itl.image._count + 1,
+                            'href': img.src,
+                            'download': 'itl_' + new Date().valueOf() + '.png'
+                        })
+                        .append(img);
 
-                $('body').append(imgContainer);
+                $('body').append(imgLink);
 
                 itl.image._count++;
                 itl.image.generate($slides);
